@@ -8,6 +8,7 @@ import commons from '../../../getItems';
 class RepayDetail2 extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             actualRepayAmt: 0,
             periodsPortAmt: 0,

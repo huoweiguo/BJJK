@@ -5,6 +5,7 @@ import { styles } from './styleCss.js';
 class RepayResult extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             status: true,
             bankName: '',

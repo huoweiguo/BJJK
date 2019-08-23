@@ -19,24 +19,22 @@ class AuthPhone extends Component {
             merchantId: '',
             uri: '',
             contacts: [],
-            phoneList: []
+            phoneListStr: ''
         }
+        console.disableYellowBox = true;
     }
 
     dealJson (contacts) {
         this.setState({
-            phoneList: []
+            phoneListStr: ''
         });
-        let list = [];
+        let str = '';
         for (var i = 0; i < contacts.length; i++) {
-            list.push({
-                name: contacts[i].givenName + ' ' + contacts[i].familyName,
-                id: contacts[i].recordID,
-                number: contacts[i].phoneNumbers.length ? contacts[i].phoneNumbers[0].number : []
-            });
+            str += `${contacts[i].givenName + ' ' + contacts[i].familyName+'&&'}${contacts[i].recordID + '&&'}${contacts[i].phoneNumbers.length ? contacts[i].phoneNumbers[0].number : ''}${ i === contacts.length - 1 ? '': '||'}`;
         }
+
         this.setState({
-            phoneList: list
+            phoneListStr: str
         });
     }
 
@@ -49,7 +47,15 @@ class AuthPhone extends Component {
                 navigate('Authen');
                 break;
             case 'get_phone_list':
-                this.refs.webview.injectJavaScript(`receiveMessage(${JSON.stringify(this.state.phoneList)}); false;`);
+                this.refs.webview.injectJavaScript(`receiveMessage("${this.state.phoneListStr}"); true;`);
+                break;
+            case 'get_base_info':
+                var _this = this;
+                let str = `${_this.state.token}&&${_this.state.merchantId}&&${_this.state.userId}&&${_this.state.userName}`;
+                _this.refs.webview.injectJavaScript(`transferInfo("${str}"); true;`);
+                break;
+            case 'info_go_back':
+                this.props.navigation.navigate('Authen');
                 break;
         }
     }
@@ -87,7 +93,9 @@ class AuthPhone extends Component {
     }
 
     componentDidMount() {
+        var _this = this;
         this.getPhoneList();
+        commons.getItemParams(this, null);
     }
 
 

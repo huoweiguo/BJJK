@@ -173,7 +173,7 @@ const AppNavigator = createStackNavigator({
     }
     
 }, {
-    initialRouteName: 'AuthBase' //login
+    initialRouteName: 'Login' //login
 });
 
 export default createAppContainer(AppNavigator);

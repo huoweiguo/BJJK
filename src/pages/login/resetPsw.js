@@ -8,6 +8,7 @@ const {width, height} = Dimensions.get('window');
 class ResetPsw extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
     }
 
     _onMessage (event) {

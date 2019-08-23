@@ -9,6 +9,7 @@ import StorageUtil from '../../../storageUtil';
 class SetPassword extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             code: '',
             time: 60,

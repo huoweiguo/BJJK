@@ -11,22 +11,36 @@ class Authen extends Component {
         let action = JSON.parse(event.nativeEvent.data),
             {navigate} = this.props.navigation;
         
-            switch (action.type) {
-                case 'auth_phone':
-                    navigate('AuthPhone');
-                    break;
-                case 'auth_base':
-                    navigate('AuthBase');
-                    break;
-            }
+        switch (action.type) {
+            case 'auth_phone':
+                navigate('AuthPhone');
+                break;
+            case 'auth_base':
+                navigate('AuthBase');
+                break;
+            case 'get_product_id':
+                let { productId, token, userId, merchantId } = this.props.navigation.state.params,
+                    str = `${token}&&${merchantId}&&${userId}&&${productId}`;
+                this.refs.webview.injectJavaScript(`getProductId("${str}");true;`)
+                break;
+            case 'go_back_home':
+                this.props.navigation.navigate('Home');
+                break;
+            case 'go_look_des':
+                this,props.navigation.navigate('desPages',{
+                    pages: action.pages
+                });
+                break;
+        }
     }
 
     render () {
         return (
             <SafeAreaView style={{flex: 1}}>
                 <WebView
+                        ref="webview"
                         style={{width: width, height: height}}
-                        source={{uri: 'http://huopan-test.baijiajiekuan.com/rn_app/#/ThreeAction'}}
+                        source={{uri: `http://huopan-test.baijiajiekuan.com/rn_app/#/ThreeAction?t=${new Date().getTime()}`}}
                         onMessage={ event => {
                             this._onMessage(event);
                         } }    

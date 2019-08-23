@@ -10,6 +10,7 @@ import axios from 'axios';
 class Init extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.timer = null;
         this.state = {
             count: 10,

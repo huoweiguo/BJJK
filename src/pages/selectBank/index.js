@@ -6,6 +6,7 @@ import { postAddress, preAddress } from '../../../api';
 class SelectBank extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             bankList: []
         }

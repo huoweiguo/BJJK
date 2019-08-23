@@ -9,6 +9,7 @@ import commons from '../../../getItems';
 class BindCard extends Component {
     constructor (props) {
         super (props);
+        console.disableYellowBox = true;
         this.state = {
             idCard: "",
             userName: '',

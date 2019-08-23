@@ -15,6 +15,7 @@ import StorageUtil from '../../../storageUtil';
 class Login extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             status: false,
             inputValue: ''

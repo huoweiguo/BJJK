@@ -9,6 +9,7 @@ import commons from '../../../getItems';
 class BankList extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             visible: false,
             isSetCard: false,

@@ -11,6 +11,7 @@ class Loan extends Component {
     
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             imgArr: [
                 'http://pic34.nipic.com/20131020/6704106_203943375000_2.jpg',
@@ -65,7 +66,12 @@ class Loan extends Component {
 
          if (!obj.hasPassAndNotAcceptFlag) {
              //this.isBindCard();
-             this.props.navigation.navigate('Authen');
+             this.props.navigation.navigate('Authen', {
+                token: this.state.token,
+                userId: this.state.userId,
+                merchantId: this.state.merchantId,
+                productId: obj.productId
+             });
          } else {
             this.props.navigation.navigate('LoanDetail', {
                 sysSeqId: obj.sysSeqId,

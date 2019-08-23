@@ -9,6 +9,7 @@ import Toast from 'react-native-easy-toast';
 class SetPassword extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             password: '',
             token: '',

@@ -10,6 +10,7 @@ class Repay extends Component {
     
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             isData: true,
             list: [],

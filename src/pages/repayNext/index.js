@@ -9,6 +9,7 @@ class RepayNext extends Component {
 
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             amount: '',
             once: '',

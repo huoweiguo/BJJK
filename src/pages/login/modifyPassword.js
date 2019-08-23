@@ -5,6 +5,7 @@ import { styles } from './modifyPasswordStyle';
 class ModifyPassword extends Component {
     constructor (props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             inputValue: '',
             password: '',
