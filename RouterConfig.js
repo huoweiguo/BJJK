@@ -25,6 +25,7 @@ import ResetPsw from './src/pages/login/resetPsw';
 import Authen from './src/pages/authen';
 import AuthPhone from './src/pages/authPhone';
 import AuthBase from './src/pages/authBase';
+import DesPages from './src/pages/desPages';
 
 
 const AppNavigator = createStackNavigator({
@@ -170,8 +171,13 @@ const AppNavigator = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             header: null
         })
-    }
-    
+    },
+    DesPages: {
+        screen: DesPages,
+        navigationOptions: ({navigation}) => ({
+            title: '产品详情'
+        })
+    }  
 }, {
     initialRouteName: 'Login' //login
 });

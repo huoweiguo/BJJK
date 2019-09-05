@@ -21,15 +21,18 @@ class Authen extends Component {
             case 'get_product_id':
                 let { productId, token, userId, merchantId } = this.props.navigation.state.params,
                     str = `${token}&&${merchantId}&&${userId}&&${productId}`;
-                this.refs.webview.injectJavaScript(`getProductId("${str}");true;`)
+                this.refs.webview.injectJavaScript(`getProductId("${str}");true;`);
                 break;
             case 'go_back_home':
                 this.props.navigation.navigate('Home');
                 break;
             case 'go_look_des':
-                this,props.navigation.navigate('desPages',{
+                this.props.navigation.navigate('DesPages',{
                     pages: action.pages
                 });
+                break;
+            case 'go_to_apply':
+                this.props.navigation.navigate('BankList');
                 break;
         }
     }

@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { WebView, Dimensions } from 'react-native';
+import { SafeAreaView,WebView, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 class DesPages extends Component {
     constructor (props) {
-        super (props) ;
+        super(props) ;
         this.state = {
-            src: this.props.navigation.state.params.pages
+            src: props.navigation.state.params.pages
         }
     }
+
     render () {
         return (
-            <WebView
-                source={{uri: this.state.src}}
-                style={{ width: width, height: height }}
-            >
-            </WebView>
+            <SafeAreaView style={{flex: 1}}>
+                <WebView
+                    source={{uri: this.state.src}}
+                    style={{ width: width, height: height }}
+                >
+                </WebView>
+            </SafeAreaView>
         )
     }
 }
