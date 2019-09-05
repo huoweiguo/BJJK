@@ -90,7 +90,7 @@ class PLogin extends Component {
                 _this.refs.toast.show("登录成功");
                 const { navigate } = this.props.navigation;
                 setTimeout(function () {
-                    navigate('Home');
+                    navigate('First');
                 }, 1500);
             } else {
                 _this.refs.toast.show(res.respMsg);

@@ -26,7 +26,8 @@ import Authen from './src/pages/authen';
 import AuthPhone from './src/pages/authPhone';
 import AuthBase from './src/pages/authBase';
 import DesPages from './src/pages/desPages';
-
+import RealName from './src/pages/realName';
+import First from './src/pages/first';
 
 const AppNavigator = createStackNavigator({
     Login: {
@@ -177,7 +178,19 @@ const AppNavigator = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             title: '产品详情'
         })
-    }  
+    },
+    RealName: {
+        screen: RealName,
+        navigationOptions: ({navigation}) => ({
+            title: '实名认证'
+        })
+    },
+    First: {
+        screen: First,
+        navigationOptions: ({navigation}) => ({
+            header: null
+        })
+    }   
 }, {
     initialRouteName: 'Login' //login
 });

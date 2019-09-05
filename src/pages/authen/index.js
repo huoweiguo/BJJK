@@ -24,7 +24,7 @@ class Authen extends Component {
                 this.refs.webview.injectJavaScript(`getProductId("${str}");true;`);
                 break;
             case 'go_back_home':
-                this.props.navigation.navigate('Home');
+                this.props.navigation.navigate('First');
                 break;
             case 'go_look_des':
                 this.props.navigation.navigate('DesPages',{

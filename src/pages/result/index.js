@@ -25,7 +25,7 @@ class Result extends Component {
     }
 
     goHome () {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('First');
     }
 
     getProductList () {

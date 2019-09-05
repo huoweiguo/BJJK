@@ -14,7 +14,7 @@ class RepayResult extends Component {
     }
 
     goHome () {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('First');
     }    
 
     componentDidMount() {
