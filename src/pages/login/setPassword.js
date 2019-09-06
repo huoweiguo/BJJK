@@ -52,7 +52,7 @@ class SetPassword extends Component {
             if(res.respCode === '000000') {
                 _this.refs.toast.show('密码设置成功');
                 setTimeout(function(){
-                    _this.props.navigation.navigate('First');
+                    _this.props.navigation.navigate('Home');
                 }, 1500);
             } else {
                 _this.refs.toast.show(res.respMsg);

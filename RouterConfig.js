@@ -192,7 +192,7 @@ const AppNavigator = createStackNavigator({
         })
     }   
 }, {
-    initialRouteName: 'Login' //login
+    initialRouteName: 'Home' //login
 });
 
 export default createAppContainer(AppNavigator);

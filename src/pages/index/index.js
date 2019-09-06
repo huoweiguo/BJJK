@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { styles } from './indexStyles';
-import Loan from '../loan';
+import First from '../first';
 import Center from '../center';
 import Repay from '../repay';
 import TabNavigator from 'react-native-tab-navigator';
@@ -20,7 +20,7 @@ class Home extends Component {
     }
 
     render () {
-        let loanView = <Loan navigation={navigation}></Loan>;
+        let loanView = <First navigation={navigation}></First>;
 
         let repayView = <Repay navigation={navigation}></Repay>;
 

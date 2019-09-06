@@ -56,5 +56,5 @@ class AuthPhone extends Component {
         )
     }
 }
-
+  
 export default AuthPhone;

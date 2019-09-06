@@ -48,7 +48,7 @@ class LoanDetail extends Component {
 
     //返回首页
     goHome () {
-        this.props.navigation.navigate('First');
+        this.props.navigation.navigate('Home');
     }
 
     lookPeriod () {

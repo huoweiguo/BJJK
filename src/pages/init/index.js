@@ -231,7 +231,7 @@ class Init extends Component {
     //跳转到首页
     goHome () {
         const { navigate } = this.props.navigation;
-        navigate('First');
+        navigate('Home');
     }
 
     resubmit () {

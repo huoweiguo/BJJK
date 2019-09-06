@@ -77,7 +77,7 @@ class SetPassword extends Component {
                             mobile: _this.state.mobile
                         });
                     } else {
-                        navigate("First");
+                        navigate("Home");
                     }
                     
                 }, 1500);
