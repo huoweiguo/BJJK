@@ -28,6 +28,8 @@ import AuthBase from './src/pages/authBase';
 import DesPages from './src/pages/desPages';
 import RealName from './src/pages/realName';
 import First from './src/pages/first';
+import Order from './src/pages/order';
+import Center from './src/pages/center';
 
 const AppNavigator = createStackNavigator({
     Login: {
@@ -190,9 +192,21 @@ const AppNavigator = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             header: null
         })
-    }   
+    },
+    Order: {
+        screen: Order,
+        navigationOptions: ({navigation}) => ({
+            header: null
+        })
+    },
+    Center: {
+        screen: Center,
+        navigationOptions: ({navigation}) => ({
+            header: null
+        })
+    }
 }, {
-    initialRouteName: 'Home' //login
+    initialRouteName: 'First' //login
 });
 
 export default createAppContainer(AppNavigator);

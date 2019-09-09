@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { SafeAreaView, Text, Dimensions, Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
-const { width, height } = Dimensions.get('window');
+import BottomNav from '../../components/bottomNav';
 import commons from '../../../getItems';
 import { regChannelId } from '../../../api';
+const { width, height } = Dimensions.get('window');
 
 class First extends Component {
 
@@ -31,6 +32,21 @@ class First extends Component {
                 let str = `${token}&&${merchantId}&&${userId}&&${device}&&${regChannelId}`;
                 this.refs.webview.injectJavaScript(`receiveBaseInfo("${str}"); true;`);
                 break;
+            case 'go_authen_pages':
+                this.props.navigation.navigate('Authen', {
+                    token: this.state.token,
+                    userId: this.state.userId,
+                    merchantId: this.state.merchantId,
+                    productId: action.productId
+                });
+                break;
+            case 'go_loanDetail_pages':
+                this.props.navigation.navigate('LoanDetail',{
+                    sysSeqId: action.sysSeqId,
+                    productId: action.productId,
+                    productName: action.productName
+                });
+                break;
         }
     }
 
@@ -50,6 +66,8 @@ class First extends Component {
                         } }
                 >
                 </WebView>
+
+                <BottomNav type="loan" navigate={this.props.navigation.navigate}/>
             </SafeAreaView>
         )
     }

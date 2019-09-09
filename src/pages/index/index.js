@@ -33,7 +33,7 @@ class Home extends Component {
                     title="借款"
                     renderIcon={() => <Image style={styles.barImg} source={require('../../assets/icon1_jk.png')} />}
                     renderSelectedIcon={() => <Image style={styles.barImg} source={require('../../assets/icon1_jk_pre.png')} />}
-                    onPress={() => this.setState({ selectedTab: 'Loan' })}>
+                    onPress={() => this.setState({ selectedTab: 'First' })}>
                     {loanView}
                 </TabNavigator.Item>
 
@@ -43,7 +43,7 @@ class Home extends Component {
                     renderIcon={() => <Image style={styles.barImg} source={require('../../assets/icon2_hk.png')} />}
                     renderSelectedIcon={() => <Image style={styles.barImg} source={require('../../assets/icon2_hk_pre.png')} />}
                     //badgeText="2"
-                    onPress={() => this.setState({ selectedTab: 'Repay' })}>
+                    onPress={() => this.setState({ selectedTab: 'Order' })}>
                     {repayView}
                 </TabNavigator.Item>
 
