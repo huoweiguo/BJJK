@@ -53,6 +53,7 @@ class RepayDetail3 extends Component {
     }
 
     componentDidMount () {
+        var _this = this;
         commons.getItemParams(this, function(){
             _this.renderList();
         });

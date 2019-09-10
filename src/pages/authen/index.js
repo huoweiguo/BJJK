@@ -10,8 +10,6 @@ class Authen extends Component {
     _onMessage(event) {
         let action = JSON.parse(event.nativeEvent.data),
             {navigate} = this.props.navigation;
-
-            console.log(action.type, '1111');
         
         switch (action.type) {
             case 'auth_phone':
@@ -29,8 +27,9 @@ class Authen extends Component {
                 this.props.navigation.navigate('First');
                 break;
             case 'go_look_des':
-                this.props.navigation.navigate('DesPages',{
-                    pages: action.pages
+                this.props.navigation.navigate('ProductDetail',{
+                    token: action.token,
+                    productId: action.productId
                 });
                 break;
             case 'go_to_apply':

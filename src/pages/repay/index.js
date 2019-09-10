@@ -147,7 +147,6 @@ class Repay extends Component {
 
         if (status === 'W' && loanPeriods === '天') {
             let singleAndUse = idAndAmt[2].split('|');
-            console.log(singleAndUse [1]);
             navigate('RepayDetail', {
                 sysSeqId: singleAndUse [1],
                 singleRepayPlanId: singleAndUse [0]

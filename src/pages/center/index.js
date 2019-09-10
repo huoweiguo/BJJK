@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text , SafeAreaView, Image, ScrollView} from 'react-native';
 import { styles } from './styleCss';
+import BottomNav from '../../components/bottomNav';
 
 class Center extends Component {
     constructor (props) {
@@ -67,6 +68,7 @@ class Center extends Component {
                         </View>
                     </ScrollView>
                 </View>
+                <BottomNav type="my" navigate={this.props.navigation.navigate}/>
             </SafeAreaView>
         )
     }

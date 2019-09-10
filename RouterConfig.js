@@ -30,6 +30,7 @@ import RealName from './src/pages/realName';
 import First from './src/pages/first';
 import Order from './src/pages/order';
 import Center from './src/pages/center';
+import ProductDetail from './src/pages/productDetail';
 
 const AppNavigator = createStackNavigator({
     Login: {
@@ -203,6 +204,12 @@ const AppNavigator = createStackNavigator({
         screen: Center,
         navigationOptions: ({navigation}) => ({
             header: null
+        })
+    },
+    ProductDetail: {
+        screen: ProductDetail,
+        navigationOptions: ({navigation}) => ({
+            title: '产品详情'
         })
     }
 }, {
