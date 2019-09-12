@@ -125,19 +125,12 @@ export const styles = StyleSheet.create({
         marginLeft: 10
     },
     agree_link: {
-        color: '#4a4a4a'
+        color: '#567bff'
     },
     loan_btn: {
         marginLeft: 10,
         marginRight: 10,
         backgroundColor: '#567bff'
-    },
-    btnText:{
-        height: 50,
-        lineHeight: 50,
-        fontSize: 18,
-        textAlign: 'center',
-        color: '#fff'
     },
     mask_content: {
         position: 'absolute',
@@ -322,5 +315,33 @@ export const styles = StyleSheet.create({
     },
     modal_index: {
         paddingRight: 23
+    },
+    bank_color: {
+        color: '#567bff',
+        fontSize: 12,
+        height: 42,
+        lineHeight: 42
+    },
+    change_text: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: 42,
+        lineHeight: 42
+    },
+    btn_views: {
+        width: width - 40,
+        height: 50,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundColor: '#567bff',
+        borderRadius: 4
+    },
+    btnText: {
+        width: '100%',
+        height: 50,
+        lineHeight: 50,
+        color: '#fff',
+        fontSize: 18,
+        textAlign: 'center'
     }
 });

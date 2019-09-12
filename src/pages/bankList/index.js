@@ -6,6 +6,8 @@ import { preAddress } from '../../../api';
 import Toast from 'react-native-easy-toast';
 import queryString from 'querystring';
 import commons from '../../../getItems';
+import StorageUtil from '../../../storageUtil';
+
 class BankList extends Component {
     constructor (props) {
         super(props);
@@ -19,14 +21,21 @@ class BankList extends Component {
             userId: '',
             userName: '',
             token: '',
-            merchantId: ''
+            merchantId: '',
+            productId: ''
         }
     }
 
     componentDidMount() {
         let _this = this;
         commons.getItemParams(this, function () {
-            _this.renderOwnCard();
+            StorageUtil.get('productId').then( res=> {
+                _this.setState({
+                    productId: res
+                }, () => {
+                    _this.renderOwnCard();
+                });
+            })
         });
     }
     
@@ -102,25 +111,29 @@ class BankList extends Component {
             },
             body: JSON.stringify({
                 userId: _this.state.userId,
-                merchantId: _this.state.merchantId
+                merchantId: _this.state.merchantId,
+                productId: _this.state.productId 
             })
         })
-            .then( res => res.json() )
-            .then( res => {
-                console.log(res);
-                if (res.respCode === '000000') {
-                    _this.setState({
-                        cardList: res.data
-                    });
-                } else {
-                    _this.refs.toast.show(res.respMsg);
-                }
-            })
-            .catch( err => {
-                console.log(err);
-            })
+        .then( res => res.json() )
+        .then( res => {
+            console.log(res);
+            if (res.respCode === '000000') {
+                _this.setState({
+                    cardList: res.data
+                });
+            } else {
+                _this.refs.toast.show(res.respMsg);
+            }
+        })
+        .catch( err => {
+            console.log(err);
+        })
     }
 
+    sure () {  
+        this.props.navigation.navigate('InitPage');
+    }
 
     render () {
         const noCardComponent = (<View style={styles.no_bank_v}>
@@ -220,6 +233,16 @@ class BankList extends Component {
                 </Modal>
 
                 <Toast position="center" ref="toast"/>
+
+                <View style={styles.sure_view}>
+                    {
+                        this.props.navigation.state.params.isApply 
+                            ? this.state.cardList.length > 0
+                                ? <Text style={styles.sure_btn_act} onPress={this.sure.bind(this)}>确认</Text>
+                                : <Text style={styles.sure_btn}>确认</Text>
+                            : (<View></View>)
+                    }
+                </View>
             </View>
         )
     }

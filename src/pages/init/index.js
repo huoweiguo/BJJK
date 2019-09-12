@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, DeviceEventEmitter} from 'react-native';
 import { styles } from './initStyle';
 import RotateInit from '../../components/rotateInit';
+import StorageUtil from '../../../storageUtil';
 import {postAddress, preAddress} from '../../../api';
 import queryString from 'querystring';
 import commons from '../../../getItems';
@@ -22,7 +23,9 @@ class Init extends Component {
             token: '',
             merchantId: '',
             userId: '',
-            userName: ''
+            userName: '',
+            productId: '',
+            productName: ''
         }
     }
 
@@ -30,7 +33,6 @@ class Init extends Component {
     initInterface () {
         const CancelToken = axios.CancelToken;
         const _this = this;
-        let { productId, productName } = this.props.navigation.state.params;
         let t = new Date().getTime(),
             url = `${preAddress}/risk/getRiskResult?token=${this.state.token}&userId=${this.state.userId}&merchantId=${this.state.merchantId}&t=${t}`;
         
@@ -41,9 +43,9 @@ class Init extends Component {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             data: queryString.stringify({
-                productId,
+                productId: _this.state.productId,
                 userName: _this.state.userName,
-                productName,
+                productName: _this.state.productName,
                 channelId: '01'
             })
         },{
@@ -54,8 +56,6 @@ class Init extends Component {
             })
         })
         .then ( res => {
-            console.log(res.data);
-            let { productId, productName, userName } = _this.props.navigation.state.params;
             if (res.data.respCode === '6666666') {
                 _this.setState( _ => ({
                     productLoanAmt: res.data.data.productLoanAmt,
@@ -69,9 +69,9 @@ class Init extends Component {
                     setTimeout( _ => {
                         this.props.navigation.navigate('LoanDetail',{
                             sysSeqId: res.data.data.sysSeqId,
-                            productId,
-                            productName,
-                            userName
+                            productId: _this.state.productId,
+                            productName: _this.state.productName,
+                            userName: _this.state.userName
                         });
                     },1500)
                 }
@@ -79,7 +79,7 @@ class Init extends Component {
                 _this.props.navigation.navigate('Result',{
                     result: 'refuse',
                     smallText: res.data.respMsg,
-                    productId
+                    productId: _this.state.productId
                 });
             }
             console.log(res);
@@ -96,7 +96,6 @@ class Init extends Component {
     toloan(){
         const _this = this;
         let t  = new Date().getTime();
-        let { productId, productName } = this.props.navigation.state.params;
         fetch(`${postAddress}/loan/confirmLoan?t=${t}`, {
             method: 'POST',
             headers: {
@@ -118,19 +117,19 @@ class Init extends Component {
                 _this.props.navigation.navigate('Result',{
                     result: 'over',
                     smallText: res.respMsg,
-                    productId
+                    productId: _this.state.productId
                 });
             }else  if(res.respCode == '060021'){
                 _this.props.navigation.navigate('Result',{
                     result: 'deal',
                     smallText: res.respMsg,
-                    productId
+                    productId: _this.state.productId
                 });
             }else{
                 _this.props.navigation.navigate('Result',{
                     result: 'faild',
                     smallText: res.respMsg,
-                    productId
+                    productId: _this.state.productId
                 });
             }
         })
@@ -143,7 +142,6 @@ class Init extends Component {
     queryloanResult(){
         const _this = this;
         let t  = new Date().getTime();
-        let { productId, productName } = this.props.navigation.state.params;
         fetch(`${postAddress}/loan/queryLoanResult?t=${t}`, {
             method: 'POST',
             headers: {
@@ -168,26 +166,26 @@ class Init extends Component {
                         endOfNumber: data.bankCode.substring(data.bankCode.length-4),
                         paymentAmt: data.paymentAmt,
                         protAmt: data.protAmt,
-                        productId
+                        productId: _this.state.productId
                     });
                 }else if(data.loanStatus === 'P' || data.loanStatus === 'I'){
                     _this.props.navigation.navigate('Result',{
                         result: 'deal',
                         smallText: res.data.respMsg,
-                        productId
+                        productId: _this.state.productId
                     });
                 }else{
                     _this.props.navigation.navigate('Result',{
                         result: 'faild',
                         smallText: res.data.respMsg,
-                        productId
+                        productId: _this.state.productId
                     });
                 }
             }else{
                 _this.props.navigation.navigate('Result',{
                     result: 'faild',
                     smallText: res.data.respMsg,
-                    productId
+                    productId: _this.state.productId
                 });
             }
         })
@@ -197,21 +195,46 @@ class Init extends Component {
         .done();
     }
 
+    async getProd (fn) {
+        //获取productId
+        await StorageUtil.get('productId').then( res => {
+            this.setState({
+                productId: res
+            });
+        });
+
+        await StorageUtil.get('productName').then( res => {
+            this.setState({
+                productName: res
+            });
+        });
+
+        await fn && fn();
+    }
+
     componentDidMount() {
         let _this = this;
         commons.getItemParams(this, function(){
-            _this.initInterface();
-            _this.countDown();
+            _this.getProd(function() {
+                _this.initInterface();
+                _this.countDown();
+            });
         }); 
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.timer);
     }
     
     //倒计时
     countDown () {
-        let _this = this;
+        let _this = this,
+            count = this.state.count;
         clearInterval(this.timer);
+        
         this.timer = setInterval(function () {
-
-            let count = _this.state.count - 1;
+            console.log(count);
+            count = count - 1;
             if (count < 0 ) {
                 _this.state.cancel();
                 clearInterval(_this.timer);

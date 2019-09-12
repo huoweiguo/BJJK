@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView , ScrollView, Dimensions} from 'react-native';
 import { WebView } from 'react-native-webview';
+import StorageUtil from '../../../storageUtil';
 const {width, height} = Dimensions.get('window');
 
 class Authen extends Component {
@@ -9,8 +10,9 @@ class Authen extends Component {
     }
     _onMessage(event) {
         let action = JSON.parse(event.nativeEvent.data),
-            {navigate} = this.props.navigation;
-        
+            {navigate} = this.props.navigation,
+            { productId, token, userId, merchantId } = this.props.navigation.state.params;
+        StorageUtil.save('productId',productId);
         switch (action.type) {
             case 'auth_phone':
                 navigate('AuthPhone');
@@ -19,8 +21,7 @@ class Authen extends Component {
                 navigate('AuthBase');
                 break;
             case 'get_product_id':
-                let { productId, token, userId, merchantId } = this.props.navigation.state.params,
-                    str = `${token}&&${merchantId}&&${userId}&&${productId}`;
+                let str = `${token}&&${merchantId}&&${userId}&&${productId}`;
                 this.refs.webview.injectJavaScript(`getProductId("${str}");true;`);
                 break;
             case 'go_back_home':
@@ -33,10 +34,13 @@ class Authen extends Component {
                 });
                 break;
             case 'go_to_apply':
-                this.props.navigation.navigate('BankList');
+                this.props.navigation.navigate('BankList', {
+                    isApply: true,
+                });
                 break;
         }
     }
+
 
     render () {
         return (

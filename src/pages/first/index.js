@@ -4,6 +4,7 @@ import { WebView } from 'react-native-webview';
 import BottomNav from '../../components/bottomNav';
 import commons from '../../../getItems';
 import { regChannelId } from '../../../api';
+import StorageUtil from '../../../storageUtil';
 const { width, height } = Dimensions.get('window');
 
 class First extends Component {
@@ -22,17 +23,19 @@ class First extends Component {
     }
 
     _onMessage (event) {
-        console.log(event);
         let action = JSON.parse(event.nativeEvent.data),
-            {navigate} = this.props.navigation;
-        
+            {navigate} = this.props.navigation,
+            {token, merchantId, userId, device, regChannelId} = this.state;
+        StorageUtil.save('regChannelId',regChannelId);
+        StorageUtil.save('device',device);
+        console.log(token, merchantId, userId, device, regChannelId);
         switch (action.type) {
             case 'get_user_info':
-                let {token, merchantId, userId, device, regChannelId} = this.state;
                 let str = `${token}&&${merchantId}&&${userId}&&${device}&&${regChannelId}`;
                 this.refs.webview.injectJavaScript(`receiveBaseInfo("${str}"); true;`);
                 break;
             case 'go_authen_pages':
+                StorageUtil.save('productName',action.productName);
                 this.props.navigation.navigate('Authen', {
                     token: this.state.token,
                     userId: this.state.userId,
@@ -46,6 +49,7 @@ class First extends Component {
                     productId: action.productId,
                     productName: action.productName
                 });
+                StorageUtil.save('productName',action.productName);
                 break;
         }
     }
@@ -66,7 +70,6 @@ class First extends Component {
                         } }
                 >
                 </WebView>
-
                 <BottomNav type="loan" navigate={this.props.navigation.navigate}/>
             </SafeAreaView>
         )

@@ -3,7 +3,9 @@ const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container: {
+        position: 'relative',
         flex: 1,
+        height: '100%',
         backgroundColor: '#f5f5f5'
     },
     no_bank_v: {
@@ -228,5 +230,30 @@ export const styles = StyleSheet.create({
     },
     cblue: {
         color:'#567bff'
+    },
+    sure_view: {
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        height: 50
+    },
+    sure_btn: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#bbcaff',
+        color: '#fff',
+        lineHeight: 50,
+        textAlign: 'center',
+        fontSize: 18
+    },
+    sure_btn_act: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#567bff',
+        color: '#fff',
+        lineHeight: 50,
+        textAlign: 'center',
+        fontSize: 18
     }
 })

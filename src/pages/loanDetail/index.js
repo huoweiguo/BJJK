@@ -5,6 +5,7 @@ import { styles } from './styleCss';
 import commons from '../../../getItems';
 import queryString from 'querystring';
 import Toast from 'react-native-easy-toast';
+import StorageUtil from '../../../storageUtil';
 
 class LoanDetail extends Component {
     constructor (props) {
@@ -28,7 +29,10 @@ class LoanDetail extends Component {
             visible: false,
             interestPayAmt: 0,
             contractShowFlag: '',
-            planList: []
+            planList: [],
+            productId: '',
+            isBtnType: false,
+            isShowBtn: false
         }
     }
 
@@ -200,13 +204,52 @@ class LoanDetail extends Component {
         })
     }
 
+    getBankCard () {
+        let _this = this,
+            t = new Date().getTime(),
+            {productId} = this.props.navigation.state.params;
+        fetch( `${preAddress}//bankCard/query?t=${t}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                token: _this.state.token
+            },
+            body: JSON.stringify({
+                userId: _this.state.userId,
+                merchantId: _this.state.merchantId,
+                productId
+            })
+        })
+        .then( res => res.json())
+        .then( res => {
+            if (res.respCode === '000000' && res.data.length > 0) {
+                this.setState({
+                    isBtnType: true
+                })
+            }
+            this.setState({
+                isShowBtn: true
+            });
+            console.log(res);
+        })
+        .catch( err => {
+            console.log(err);
+        })
+    }
+
     componentDidMount() {
         let _this = this;
         commons.getItemParams(this, function(){
             _this.renderData();
+            _this.getBankCard();
         });
     }
     
+    changeCard () {
+        this.props.navigation.navigate('BankList',{
+            isApply: false
+        });
+    }
 
     //跳转到结果页面
     goResult (res) {
@@ -306,7 +349,10 @@ class LoanDetail extends Component {
                                 <Text style={styles.list_num} onPress={this.lookPeriod.bind(this)}>查看</Text>
                             </View>
                         </View>
-                        <Text style={styles.msg_title}>银行卡信息</Text>
+                        <View style={styles.change_text}>
+                            <Text style={styles.msg_title}>银行卡信息 </Text>
+                            <Text style={styles.bank_color} onPress={this.changeCard.bind(this)}>更换银行卡</Text>
+                        </View>
                         <View style={styles.msg_list}>
                             <View style={styles.list}>
                                 <Text style={styles.list_name}>到站银行卡</Text>
@@ -320,15 +366,24 @@ class LoanDetail extends Component {
 
                         {
                             this.state.contractShowFlag != 'N' 
-                                ?  <Text style={styles.msg_agree}>*点击“同意借款”即表示同意签署<Text style={styles.agree_link}>《借款合同及相关协议》</Text></Text>
+                                ?  <Text style={styles.msg_agree}>我已阅读并同意<Text style={styles.agree_link}>《借款相关协议》</Text></Text>
                                 : <Text></Text>
                         }
                         
-                        <TouchableHighlight
-                            style={styles.loan_btn}
-                            underlayColor="#bbcaff">
-                            <Text onPress={this.toloan.bind(this)} style={styles.btnText}>同意借款</Text>
-                        </TouchableHighlight>
+                        {
+                            this.state.isShowBtn 
+                                ? (<View style={styles.btn_views}>
+                                        {
+                                            this.state.isBtnType 
+                                                ? <Text onPress={this.toloan.bind(this)} style={styles.btnText}>同意借款</Text>
+                                                : <Text onPress={() => {this.props.navigation.navigate('BankList')}} style={styles.btnText}>去绑卡</Text>
+                                        }
+                                    </View>)
+                                : (<View></View>)
+                        }
+                        
+                        
+                       
                     </View>
 
                     {/**遮照 */}
